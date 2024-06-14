@@ -1,0 +1,277 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Code Writing API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/call": {
+      "post": [
+        {
+          "summary": "Upload Project Files",
+          "operationId": "uploadProjectFiles",
+          "tags": ["File Upload"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadProjectPayload"
+                }
+              }
+            }
+          },
+          "headers": {
+            "Accept": {
+              "schema": {
+                "type": "string",
+                "default": "application/json"
+              }
+            },
+            "X-Marketplace-Token": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "X-Request-ID": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "X-User-ID": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "Content-Type": {
+              "schema": {
+                "type": "string",
+                "default": "application/json"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful upload",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UploadProjectResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        {
+          "summary": "Write Code",
+          "operationId": "writeCode",
+          "tags": ["Code Writing"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WriteCodePayload"
+                }
+              }
+            }
+          },
+          "headers": {
+            "Accept": {
+              "schema": {
+                "type": "string",
+                "default": "application/json"
+              }
+            },
+            "X-Marketplace-Token": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "X-Request-ID": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "X-User-ID": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "Content-Type": {
+              "schema": {
+                "type": "string",
+                "default": "application/json"
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Code written successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/WriteCodeResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "UploadProjectPayload": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": ["upload_project"]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "structures": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["method", "payload"]
+      },
+      "UploadProjectResponse": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            }
+          },
+          "processDuration": {
+            "type": "integer"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "response": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string"
+              }
+            }
+          },
+          "service": {
+            "type": "string"
+          },
+          "traceId": {
+            "type": "string"
+          }
+        },
+        "required": ["apiVersion", "datetime", "errorCode", "requestId", "service", "traceId"]
+      },
+      "WriteCodePayload": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": ["write_code"]
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "queryString": {
+                "type": "string"
+              },
+              "agent": {
+                "type": "string"
+              },
+              "filePaths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["method", "payload"]
+      },
+      "WriteCodeResponse": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
+          "datetime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            }
+          },
+          "processDuration": {
+            "type": "integer"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "response": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string"
+              }
+            }
+          },
+          "service": {
+            "type": "string"
+          },
+          "traceId": {
+            "type": "string"
+          }
+        },
+        "required": ["apiVersion", "datetime", "errorCode", "requestId", "service", "traceId"]
+      }
+    }
+  }
+}
